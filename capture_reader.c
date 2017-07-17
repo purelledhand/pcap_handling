@@ -149,7 +149,7 @@ int main(int argc, char **argv)
     // 컴파일 옵션을 준다.
     if (pcap_compile(pcd, &fp, argv[2], 0, netp) == -1)
     {
-        printf("compile error\n");    
+        printf("compile error\nformat example : ./packet_capture -1 \"port 80\"\n");    
         exit(1);
     }
     // 컴파일 옵션대로 패킷필터 룰을 세팅한다. 
