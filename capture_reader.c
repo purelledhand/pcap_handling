@@ -16,6 +16,9 @@
 #define PROMISCUOUS 1
 #define NONPROMISCUOUS 0
 
+// Ethernet 헤더 구조체
+struct ethhdr *ethh;
+
 // IP 헤더 구조체
 struct ip *iph;
 
@@ -24,8 +27,7 @@ struct tcphdr *tcph;
 
 // 패킷을 받아들일경우 이 함수를 호출한다.  
 // packet 가 받아들인 패킷이다.
-void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, 
-                const u_char *packet)
+void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *packet)
 {
     static int count = 1;
     struct ether_header *ep;
@@ -49,9 +51,10 @@ void callback(u_char *useless, const struct pcap_pkthdr *pkthdr,
         // IP 헤더에서 데이타 정보를 출력한다.  
         iph = (struct ip *)packet;
         printf("제발 나와라..\n");
-        printf("Ident       : %d\n", ntohs(iph->ip_id));
-        printf("Src Address : %s\n", inet_ntoa(iph->ip_src));
-        printf("Dst Address : %s\n", inet_ntoa(iph->ip_dst));
+	printf("Src MAC Address : %s\n", ntohs(ethh->h_source));
+	printf("Dst MAC Address : %s\n", ntohs(ethh->h_dest));
+        printf("Src IP Address : %s\n", inet_ntoa(iph->ip_src));
+        printf("Dst IP Address : %s\n", inet_ntoa(iph->ip_dst));
 
         // 만약 TCP 데이타 라면
         // TCP 정보를 출력한다. 
