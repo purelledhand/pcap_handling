@@ -51,9 +51,19 @@ void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *p
         // IP 헤더에서 데이타 정보를 출력한다.  
         iph = (struct ip *)packet;
         printf("제발 나와라..\n");
-	printf("Src MAC Address : %s\n", ntohs(ethh->h_source));
-	printf("Dst MAC Address : %s\n", ntohs(ethh->h_dest));
-        printf("Src IP Address : %s\n", inet_ntoa(iph->ip_src));
+	
+	// Print MAC Address
+	printf("Src MAC Address : ");
+	for(int i=0; i<ETH_ALEN; ++i)
+		printf("%.2x", ep->ether_shost[i]);
+	printf("\n");
+	printf("Dst MAC Address : ");
+	for(int i=0; i<ETH_ALEN; ++i)
+		printf("%.2x", ep->ether_dhost[i]);
+        printf("\n");
+
+	// Print IP Address
+	printf("Src IP Address : %s\n", inet_ntoa(iph->ip_src));
         printf("Dst IP Address : %s\n", inet_ntoa(iph->ip_dst));
 
         // 만약 TCP 데이타 라면
