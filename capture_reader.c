@@ -50,7 +50,7 @@ void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *p
     {
         // IP 헤더에서 데이타 정보를 출력한다.  
         iph = (struct ip *)packet;
-        printf("제발 나와라..\n");
+        printf("제발 나와주세요 패킷님..\n");
 	
 	// Print MAC Address
 	printf("Src MAC Address : ");
@@ -66,7 +66,6 @@ void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *p
 	printf("Src IP Address : %s\n", inet_ntoa(iph->ip_src));
         printf("Dst IP Address : %s\n", inet_ntoa(iph->ip_dst));
 
-        // 만약 TCP 데이타 라면
         // TCP 정보를 출력한다. 
         if (iph->ip_p == IPPROTO_TCP)
         {
@@ -75,7 +74,6 @@ void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *p
             printf("Dst Port : %d\n" , ntohs(tcph->dest));
         }
 
-        // Packet 데이타 를 출력한다. 
         // IP 헤더 부터 출력한다.  
         while(length--)
         {
@@ -83,11 +81,6 @@ void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *p
             if ((++chcnt % 16) == 0) 
                 printf("\n");
         }
-    }
-    // IP 패킷이 아니라면 
-    else
-    {
-        printf("NONE IP 패킷\n");
     }
     printf("\n\n");
 }    
