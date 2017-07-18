@@ -75,12 +75,15 @@ void callback(u_char *useless, const struct pcap_pkthdr *pkthdr, const u_char *p
         }
 
         // IP 헤더 부터 출력한다.  
-        while(length--)
-        {
-            printf("%02x", *(packet++)); 
-            if ((++chcnt % 16) == 0) 
-                printf("\n");
-        }
+
+	for(int i=0; i < header->caplen; ++i) {
+	if (isascii(packet[i])) {
+		putchar(packet[i]);
+	} else {
+		putchar('.');
+
+	}
+	}
     }
     printf("\n\n");
 }    
